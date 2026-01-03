@@ -1,0 +1,43 @@
+{
+  "name": "@lpj.app/npm-package-template",
+  "version": "1.0.0",
+  "description": "A npm package template for ESM using TypeScript and TSUP.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "tests"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && tsup src/index.ts --format cjs,esm --dts ",
+    "prepack": "npm run build",
+    "test": "node --experimental-strip-types --test",
+    "lint": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpj-app/production-ready-npm-package.git"
+  },
+  "keywords": [],
+  "author": "Luca-Pascal Junge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lpj-app/npm-package-template/issues"
+  },
+  "homepage": "https://github.com/lpj-app/npm-package-template#readme",
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "rimraf": "^6.1.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
