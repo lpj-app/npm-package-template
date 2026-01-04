@@ -36,26 +36,51 @@ To test the package functionality, run: <br>
 ```bash
 npm test
 ```
+###
+## 3. Build and Local Testing
+    To compile your TypeScript into production-ready JavaScript, run the build command. The output will be stored in the `/dist` folder.
 
-## 3. Local Build
-To build the package, run: <br>
-```bash
-npm run build
-```
-The build files will be located in `/dist`
+    ```bash
+    npm run build
+    ```
 
-### 3.1 Local tests
-Before publishing the package, do some manual local tests. 
-For this you can add the package to your systems global npm packages with:
+    <br/>
+Testing locally ensures that your library functions correctly as a standalone package before you publish it to npm.
+###
+### 3.1. Soft Local Test
+
+To test the package locally without publishing it to the web, use `npm link`. This is ideal for rapid development.
+
+1. **In your package folder**: Run `npm link`
+2. **In your test project**: Run `npm link <your-package-name>`
+
+Now you can import your package in your test project and test it as if it were published. Changes you make in your library source code are reflected immediately in the test project.
+###
+### 3.2. Hard Local Test
+
+If the soft test worked without problems, it is highly recommended to perform a "hard" local test. This simulates the actual installation process.
+
+1. **In your package folder**: Create a packed archive with `npm pack`
+2. **In your test project**: Install the created archive:
 ```bash
-npm link
-```
-Now you can connect the local package to your test project with: 
-```bash
-npm link '@lpj.app/npm-package-template' 
+# You can install it directly from the path without moving the file
+npm install ../path/to/numislib-api/numislib-1.0.0.tgz
+
 ```
 
-This simulates the behavior of a user installing the package from npm.
+
+
+> **Pro-Tip**: Installing the `.tgz` directly keeps your test project cleaner by avoiding manual file moves.
+
+---
+###
+#### Comparison of Testing Methods
+
+| Method | Best For... | Why it's important |
+| --- | --- | --- |
+| **Soft Test (`npm link`)** | Rapid development and debugging. | Changes are reflected immediately without rebuilding or reinstalling. |
+| **Hard Test (`npm pack`)** | Verifying the published structure. | Ensures the `files` array in `package.json` includes the `data` folder and internal paths resolve correctly inside `node_modules`. |
+
 
 > **Note** <br> 
 > If you make changes to the source code, you need to run `npm run build` again in the 
